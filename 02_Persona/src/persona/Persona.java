@@ -1,0 +1,45 @@
+
+package persona;
+
+public class Persona {
+	private String nameSurname;
+	private int yearOfBirth;
+	
+	public Persona(String nameSurname, int yearOfBirth) {
+		this.nameSurname = nameSurname;
+		this.yearOfBirth = yearOfBirth;
+	}
+	
+	public Persona(String name, String yearOfBirth) {
+		this(name, Integer.parseInt(yearOfBirth));
+	}
+	
+	public String getNameSurname() {
+		return nameSurname;
+	}
+	
+	public int getYearOfBirth() {
+		return yearOfBirth;
+	}
+	
+	public boolean omonimo(Persona p) {
+		String sTemp = p.getNameSurname();
+		return sTemp.equalsIgnoreCase(this.nameSurname);
+	}
+	
+	public int olderThan(Persona other) {
+		if(this.yearOfBirth > other.yearOfBirth)
+			return -1;
+		else if (this.yearOfBirth == other.yearOfBirth)
+			return 0;
+		else
+			return 1;
+	}
+	
+	@Override
+	public String toString() {
+		return getNameSurname() + "nato/a nel" + getYearOfBirth();
+	}
+	
+	
+}
