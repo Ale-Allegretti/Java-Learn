@@ -2,7 +2,7 @@
 package persona;
 
 public class Persona {
-	private String nameSurname;
+	protected String nameSurname;
 	private int yearOfBirth;
 	
 	public Persona(String nameSurname, int yearOfBirth) {
@@ -34,6 +34,10 @@ public class Persona {
 			return 0;
 		else
 			return 1;
+	}
+	
+	public void show() {
+		System.out.print(nameSurname);
 	}
 	
 	@Override
