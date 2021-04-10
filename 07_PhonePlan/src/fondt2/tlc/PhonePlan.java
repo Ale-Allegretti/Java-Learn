@@ -13,4 +13,12 @@ public class PhonePlan {
         return name;
     }
     
+    public double getCallCost(PhoneCall call) {
+		return 0.2;
+	}
+
+	public boolean isValid() {
+		return true;
+	}
+    
 }

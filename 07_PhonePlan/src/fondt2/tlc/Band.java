@@ -8,15 +8,15 @@ import fondt2.tlc.util.DayOfWeekHelper;
 public class Band {
 	
 	private DayOfWeek[] combinedDays;
-	private LocalTime start;
-	private LocalTime end;
+	private LocalTime startTime;
+	private LocalTime endTime;
 	private double costPerInterval;
 	
 	public Band(LocalTime start, LocalTime end, DayOfWeek[] combinedDays, double costPerInterval) {
 		super();
 		this.combinedDays = combinedDays;
-		this.start = start;
-		this.end = end;
+		this.startTime = start;
+		this.endTime = end;
 		this.costPerInterval = costPerInterval;
 	}
 
@@ -25,11 +25,11 @@ public class Band {
 	}
 
 	public LocalTime getStartTime() {
-		return start;
+		return startTime;
 	}
 
 	public LocalTime getEndTime() {
-		return end;
+		return endTime;
 	}
 
 	public double getCostPerInterval() {
@@ -38,18 +38,20 @@ public class Band {
 	
 	public boolean isInBand(LocalDateTime dateTime) {
 		DayOfWeek theDay = dateTime.getDayOfWeek();
-		LocalTime theTime = LocalTime.of(dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond());
-		if(DayOfWeekHelper.isDayIn(theDay, this.combinedDays) && this.isValid() 
-				&& this.start.isBefore(theTime) && this.end.isAfter(theTime))
+		LocalTime theTime = dateTime.toLocalTime();
+		if(DayOfWeekHelper.isDayIn(theDay, this.combinedDays) 
+				&& this.startTime.isBefore(theTime) && this.endTime.isAfter(theTime))
 					return true;
 		return false;
 	}
 	
 
 	public boolean isValid() {
+		if (combinedDays != null && combinedDays.length > 0 && startTime != null && endTime != null && costPerInterval >= 0) {
 		for (DayOfWeek d : this.combinedDays)
-			if (d != null && this.start.isBefore(this.end) && this.combinedDays.length > 0 && this.costPerInterval >= 0)
+			if (d != null && this.startTime.isBefore(this.endTime))
 					return true;
+		}
 		return false;
 	}
 	
