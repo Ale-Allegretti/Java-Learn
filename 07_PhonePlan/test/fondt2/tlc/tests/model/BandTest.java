@@ -18,7 +18,8 @@ public class BandTest {
 	@BeforeEach
 	public void startUp()
 	{
-	 band = new Band(LocalTime.of(8, 0), LocalTime.of(18, 0), new DayOfWeek[] { DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY}, 15);
+	 band = new Band(LocalTime.of(8, 0), LocalTime.of(18, 0),
+	 new DayOfWeek[] { DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY}, 15);
 			
 	}
 	

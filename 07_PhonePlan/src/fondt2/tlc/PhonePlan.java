@@ -1,5 +1,6 @@
 package fondt2.tlc;
 
+
 public class PhonePlan {
     private String name;
     private Rate[] rates;
@@ -13,12 +14,29 @@ public class PhonePlan {
         return name;
     }
     
+    private Rate getRate(PhoneCall call) {
+		for(Rate r: rates) 
+			if(r.isApplicableTo(call.getDestNumber())) 
+				return r;
+		
+		return null;
+	}
+    
     public double getCallCost(PhoneCall call) {
-		return 0.2;
+    	Rate toUse = this.getRate(call);
+		if (toUse == null)
+			return -1;
+		else
+			return toUse.getCallCost(call);
 	}
 
 	public boolean isValid() {
-		return true;
+		for (Rate r : this.rates) {
+			if (r.isValid())  {
+				return true;
+			}
+		}
+		return false;
 	}
     
 }

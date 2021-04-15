@@ -3,6 +3,8 @@ package fondt2.tlc;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
+
 import fondt2.tlc.util.DayOfWeekHelper;
 
 public class Band {
@@ -14,7 +16,7 @@ public class Band {
 	
 	public Band(LocalTime start, LocalTime end, DayOfWeek[] combinedDays, double costPerInterval) {
 		super();
-		this.combinedDays = combinedDays;
+		this.combinedDays = Arrays.copyOf(combinedDays, combinedDays.length);
 		this.startTime = start;
 		this.endTime = end;
 		this.costPerInterval = costPerInterval;
