@@ -1,6 +1,8 @@
 
 package persona;
 
+import java.util.Objects;
+
 public class Persona {
 	protected String nameSurname;
 	private int yearOfBirth;
@@ -36,6 +38,7 @@ public class Persona {
 			return 1;
 	}
 	
+	
 	public void show() {
 		System.out.print(nameSurname);
 	}
@@ -43,6 +46,23 @@ public class Persona {
 	@Override
 	public String toString() {
 		return getNameSurname() + "nato/a nel" + getYearOfBirth();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nameSurname, yearOfBirth);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		return Objects.equals(nameSurname, other.nameSurname) && yearOfBirth == other.yearOfBirth;
 	}
 	
 	
