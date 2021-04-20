@@ -15,7 +15,6 @@ public class Band {
 	private double costPerInterval;
 	
 	public Band(LocalTime start, LocalTime end, DayOfWeek[] combinedDays, double costPerInterval) {
-		super();
 		this.combinedDays = Arrays.copyOf(combinedDays, combinedDays.length);
 		this.startTime = start;
 		this.endTime = end;

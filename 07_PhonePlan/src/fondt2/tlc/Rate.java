@@ -59,11 +59,13 @@ public class Rate {
 	}
 	
 	private boolean validateDay(DayOfWeek day) {
+		if (day != null) {
 		Band[] estratte = this.selectBandsInDay(day);
 		sortBandsByStartTime(estratte);
 		if(validateBandsInDay(estratte))
 			return true;
-		else return false;
+		}
+		return false;
 	}
 	
 	private Band[] selectBandsInDay(DayOfWeek day) {

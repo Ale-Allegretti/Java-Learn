@@ -1,5 +1,6 @@
 package fondt2.tlc;
 
+import java.util.Arrays;
 
 public class PhonePlan {
     private String name;
@@ -7,7 +8,7 @@ public class PhonePlan {
 
     public PhonePlan(String name, Rate[] rates) {
         this.name = name;
-        this.rates = rates;
+        this.rates = Arrays.copyOf(rates, rates.length);
     }
 
     public String getName() {
