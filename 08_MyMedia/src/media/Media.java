@@ -33,23 +33,16 @@ public abstract class Media implements HasType {
 
 	@Override
 	public String toString() {
-		return "Media [title=" + title + ", year=" + year + "]";
+		return "Media di tipo " + getType() + " con titolo: " + getTitle() + " anno: " + getYear();
 	}
+	
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + year;
-		return result;
-	}
-
+	@SuppressWarnings("preview")
 	@Override
 	public boolean equals(Object obj) {
-		Media other = (Media) obj;
-		if (obj instanceof Media)
-			return this.title == other.title && this.year == other.year;
+		if (obj instanceof Media m)
+			return (this.title.equals(m.getTitle()) && this.year == m.getYear());
+		
 		return false;
 	}
 	

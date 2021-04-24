@@ -30,7 +30,12 @@ public class MediaController {
 	}
 	
 	public MediaCollection getAll() {
-		return this.allMedias;
+		MediaCollection me = new MediaCollection(allMedias.size());
+		for (int i = 0; i < allMedias.size(); i++) {
+			me.add(allMedias.get(i));
+		}
+
+		return me;
 	}
 	
 	public MediaCollection find (Filter f) {

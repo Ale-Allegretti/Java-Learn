@@ -12,16 +12,27 @@ public class Ebook extends Media implements HasGenre {
 	
 	public Ebook (String titolo, int anno, String[] authors, String genre) {
 		super(anno, titolo);
-		this.authors = Arrays.copyOf(authors, authors.length);
 		this.genre = genre;
+		this.authors = new String[authors.length];
+		for (int i = 0; i < authors.length; i++) {
+			this.authors[i] = authors[i];
+		}
 	}
 
 	public String[] getAuthors() {
-		return authors;
+		String[] auth = new String[authors.length];
+		for (int i = 0; i < authors.length; i++) {
+			auth[i] = authors[i];
+
+		}
+		return auth;
 	}
 
 	public void setAuthors(String[] authors) {
-		this.authors = authors;
+		this.authors = new String[authors.length];
+		for (int i = 0; i < authors.length; i++) {
+			this.authors[i] = authors[i];
+		}
 	}
 
 	public String getGenre() {
@@ -34,8 +45,14 @@ public class Ebook extends Media implements HasGenre {
 
 	@Override
 	public String toString() {
-		return "Ebook [authors=" + Arrays.toString(authors) + ", genre=" + genre + ", getTitle()=" + getTitle()
-				+ ", getYear()=" + getYear() + "]";
+		String str = new String(super.toString() + " autori: ");
+		for (int i = 0; i < this.authors.length; i++) {
+			str = str + authors[i] + " ";
+
+		}
+		str = str + "genere: " + getGenre() + "\n";
+		return str;
+
 	}
 
 	@Override
@@ -52,14 +69,16 @@ public class Ebook extends Media implements HasGenre {
 		return result;
 	}
 
+	@SuppressWarnings("preview")
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Ebook) {
-			Ebook other = (Ebook) obj;
-			return StringUtils.areEquivalent(authors, other.authors) && this.genre.equalsIgnoreCase(other.genre) && super.equals(other);
-		}
+		if (obj instanceof Ebook eb)
+		{return StringUtils.areEquivalent(getAuthors(), eb.getAuthors()) && this.genre.equals(eb.getGenre())
+				&& super.equals(obj); }
 		return false;
 	}
+	
+	
 	
 
 	

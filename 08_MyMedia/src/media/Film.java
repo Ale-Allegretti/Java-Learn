@@ -1,10 +1,7 @@
 package media;
 
-import java.util.Arrays;
-
 import media.filters.HasDuration;
 import media.filters.HasGenre;
-import utils.StringUtils;
 
 public class Film extends Media implements HasDuration, HasGenre {
 
@@ -15,18 +12,28 @@ public class Film extends Media implements HasDuration, HasGenre {
 	
 	public Film (String titolo, int anno, String regista, int duration, String[] attori, String genre) {
 		super(anno, titolo);
-		this.actors = Arrays.copyOf(attori, attori.length);
 		this.director = regista;
 		this.duration = duration;
 		this.genre = genre;
+		this.actors = new String[attori.length];
+		for (int i = 0; i < attori.length; i++) {
+			this.actors[i] = attori[i];
+		}
 	}
 
 	public String[] getActors() {
+		String[] actors = new String[this.actors.length];
+		for (int i = 0; i < this.actors.length; i++) {
+			actors[i] = this.actors[i];
+		}
 		return actors;
 	}
 
 	public void setActors(String[] actors) {
-		this.actors = actors;
+		this.actors = new String[actors.length];
+		for (int i = 0; i < actors.length; i++) {
+			this.actors[i] = actors[i];
+		}
 	}
 
 	public String getDirector() {
@@ -60,18 +67,26 @@ public class Film extends Media implements HasDuration, HasGenre {
 
 	@Override
 	public String toString() {
-		return "Film [actors=" + Arrays.toString(actors) + ", director=" + director + ", duration=" + duration
-				+ ", genre=" + genre + ", getTitle()=" + getTitle() + ", getYear()=" + getYear() + "]";
+		String str = super.toString() + " regista: " + getDirector() + " durata: minuti " + getDuration() + " attori: ";
+		for (int i = 0; i < this.actors.length; i++) {
+			str += actors[i];
+			if (i < this.actors.length - 1) {
+				str += ", ";
+			}
+		}
+		str += "\n";
+		return str;
 	}
 
 
+	@SuppressWarnings("preview")
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Film) {
-			Film other = (Film) obj;
-			return StringUtils.areEquivalent(actors, other.actors) && this.director.equalsIgnoreCase(other.director)
-					&& duration == other.duration && this.genre.equalsIgnoreCase(other.genre) && super.equals(other);
-		}
+		if (obj instanceof Film f){
+			return this.getDirector().equals(f.getDirector()) && 
+					this.getDuration() == f.getDuration() &&
+					this.getGenre() == f.getGenre() &&
+					super.equals(obj);}
 		return false;
 	}
 	

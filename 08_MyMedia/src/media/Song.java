@@ -3,7 +3,7 @@ package media;
 import media.filters.HasDuration;
 import media.filters.HasGenre;
 
-public class Song extends Media implements HasDuration, HasGenre{
+public class Song extends Media implements HasDuration, HasGenre {
 	
 	private int duration = -1;
 	private String genre = null;
@@ -51,16 +51,18 @@ public class Song extends Media implements HasDuration, HasGenre{
 
 	@Override
 	public String toString() {
-		return "Song [duration=" + duration + ", genre=" + genre + ", singer=" + singer + ", getTitle()=" + getTitle()
-				+ ", getYear()=" + getYear() + "]";
+		return super.toString() + " cantante: " + getSinger() + " durata: minuti " + getDuration() + "\n";
 	}
 
+	
+	@SuppressWarnings("preview")
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Song) {
-			Song other = (Song) obj;
-			return this.duration == other.duration && this.genre.equalsIgnoreCase(other.genre) && this.singer.equalsIgnoreCase(other.singer)
-					&& super.equals(other);
+		if (obj instanceof Song c) {	
+		return getSinger().equals(c.getSinger()) && 
+				getDuration() == c.getDuration() &&
+				getGenre() == c.getGenre() &&
+				super.equals(obj);
 		}
 		return false;
 	}

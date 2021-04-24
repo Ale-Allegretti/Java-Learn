@@ -7,7 +7,7 @@ public class GenreFilter implements Filter {
 	private String genre = null;
 	
 	public GenreFilter (String genre) {
-		this.genre = genre;
+		setGenre(genre);
 	}
 
 	public void setGenre(String genre) {
