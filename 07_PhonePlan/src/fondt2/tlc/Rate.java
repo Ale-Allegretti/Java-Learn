@@ -3,7 +3,8 @@ package fondt2.tlc;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
-
+import java.util.Arrays;
+import java.util.Comparator;
 
 import fondt2.tlc.util.DayOfWeekHelper;
 
@@ -87,7 +88,7 @@ public class Rate {
 	
 	
 	private void sortBandsByStartTime(Band[] bands) {	//bubble sort adattato
-		boolean ordinato = false;
+		/*boolean ordinato = false;
 		int size_v = bands.length - 1;
 		while (size_v > 1 && !ordinato) {
 			ordinato = true;
@@ -99,7 +100,16 @@ public class Rate {
 					ordinato = false;
 				}
 			size_v--;
-		}
+		}*/
+		Arrays.sort(bands, new Comparator<Band>() {		//array sort con comparatore
+			public int compare(Band b1, Band b2) {
+				if (b1.getStartTime().isAfter(b2.getStartTime()))
+					return 1;
+				if (b1.getStartTime().isBefore(b2.getStartTime()))
+					return -1;
+				return 0;
+			}
+		});
 	}
 	
 	
