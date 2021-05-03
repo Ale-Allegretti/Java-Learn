@@ -8,7 +8,6 @@ import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.Test;
 
-import control.*;
 import model.Appointment;
 import model.AppointmentCollection;
 

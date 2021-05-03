@@ -25,7 +25,7 @@ public class MyCercatore implements Cercatore {
 		for (Linea linea : mappaLinee.values()) {
 			Optional<Percorso> percOptional = linea.getPercorso(fermataDa, fermataA);
 			if (percOptional.isPresent()) {
-				Percorso percorso = percOptional.get();
+				Percorso percorso = percOptional.get();  //get metodo di Optional
 				if (percorso.getDurata() > 0)
 					percorsiDiretti.add(percorso);
 			}

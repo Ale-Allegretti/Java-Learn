@@ -10,6 +10,10 @@ public class LineaCircolare extends Linea {
 		if (!isCircolare())
 			throw new IllegalArgumentException("Non linea non è circolare");
 	}
+	
+	public boolean isCapolinea(String nome) {
+		return isCapolineaIniziale(nome);
+	}
 
 	@Override
 	public Optional<Percorso> getPercorso(String FermataDa, String FermataA) {
@@ -23,13 +27,13 @@ public class LineaCircolare extends Linea {
 			
 			if(capolineaI.equals(FermataDa) && !capolineaF.equals(FermataA)) 
 				durata = durataF;
-			if(!capolineaI.equals(FermataDa) && capolineaF.equals(FermataA))
+			else if(!capolineaI.equals(FermataDa) && capolineaF.equals(FermataA))
 				durata = durataF - durataI;
-			if(FermataDa.equals(FermataA))
+			else if(FermataDa.equals(FermataA))
 				durata = durataF;
-			if(durataI < durataF)
+			else if(durataI < durataF)
 				durata = durataF - durataI;
-			if(durataI >= durataF)
+			else if(durataI >= durataF)
 				durata = giroCompleto - (durataI - durataF);
 			
 			return Optional.of(new Percorso(FermataDa, FermataA, this, durata));

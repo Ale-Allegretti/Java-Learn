@@ -11,7 +11,7 @@ public abstract class Linea {
 	
 	
 	public Linea(String id, Map<Integer, Fermata> orariPassaggioAlleFermate) {
-		if(id == null || id.isBlank() || id.isEmpty() || orariPassaggioAlleFermate == null)
+		if(id == null || id.isBlank() || orariPassaggioAlleFermate == null)
 			throw new IllegalArgumentException("Non esiste la linea selezionata");
 		this.id = id;
 		this.orariPassaggioAlleFermate = orariPassaggioAlleFermate;
@@ -58,7 +58,7 @@ public abstract class Linea {
 	}
 	
 	
-	public Entry<Integer, Fermata> getCapolineaFinale() throws IllegalArgumentException {  //da verificare
+	public Entry<Integer, Fermata> getCapolineaFinale() throws IllegalArgumentException {  
 		Optional<Entry<Integer, Fermata>> entryFinale = Optional.empty();
 		for(Entry<Integer, Fermata> entry : this.getOrariPassaggioAlleFermate().entrySet())
 			if(!entryFinale.isPresent() || entry.getKey() > entryFinale.get().getKey())
