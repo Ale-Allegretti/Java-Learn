@@ -19,7 +19,7 @@ public class Tassametro implements ITassametro {
 			if (this.fasceOrarie[i].contiene(oraInizioCorsa))
 				return this.fasceOrarie[i].getCostoScattoIniziale();
 			
-		return 0.0;
+		return Double.NaN;
 	}
 	
 	
