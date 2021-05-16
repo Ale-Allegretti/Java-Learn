@@ -1,0 +1,6 @@
+StartContact
+ale;allegretgtì
+EMail;job;caio@asd.it
+Phone;casa;1232131
+casa;via xx;21;2121;Andria;italia
+EndContact
