@@ -19,9 +19,9 @@ public class MyController implements Controller {
 	@Override
 	public List<Airport> getSortedAirports() {
 		this.sortedAirports = new ArrayList<>(this.dataManager.getAirportMap().values());
-		sortedAirports.sort(Comparator.comparing((Airport a1) -> a1.getCity().getName()).thenComparing(a1 -> a1.getName()));
+		this.sortedAirports.sort(Comparator.comparing((Airport a1) -> a1.getCity().getName()).thenComparing(a1 -> a1.getName()));
 		
-		return sortedAirports;
+		return this.sortedAirports;
 	}
 
 	@Override
@@ -35,7 +35,14 @@ public class MyController implements Controller {
 				fs.getDaysOfWeek().contains(date.getDayOfWeek()))
 				res.add(fs);
 		}
-		
+		/*									//Alternativa con lambda exp. e stream
+		List<FlightSchedule> res = 
+		dataManager.getFlightSchedules().stream().filter(
+				fs -> fs.getDepartureAirport().equals(departureAirport) &&
+				      fs.getArrivalAirport().equals(arrivalAirport) &&
+				      fs.getDaysOfWeek().contains(dayOfWeek)
+				      ).collect(Collectors.toList());
+		*/
 		return res;
 	}
 

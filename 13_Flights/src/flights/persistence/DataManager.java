@@ -1,6 +1,5 @@
 package flights.persistence;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -22,6 +21,9 @@ public class DataManager {
 		this.citiesReader = citiesReader;
 		this.aircraftsReader = aircraftsReader;
 		this.flightScheduleReader = flightScheduleReader;
+		
+		airportMap = new HashMap<String, Airport>();
+		aircraftMap = new HashMap<String, Aircraft>();
 	}
 
 
@@ -39,29 +41,26 @@ public class DataManager {
 		return flightSchedules;
 	}
 	
-	public void readAll() throws FileNotFoundException, IOException, BadFileFormatException {
+	public void readAll() throws IOException, BadFileFormatException {
 		try (Reader reader1 = new FileReader("Cities.txt")) {
 			Collection<City> cityReader = citiesReader.read(reader1);
-			this.airportMap = new HashMap<String, Airport>();
+			airportMap.clear();
 			for (City c : cityReader) {
 				for (Airport a : c.getAirports())
-					this.airportMap.put(a.getCode(), a);
+					airportMap.put(a.getCode(), a);
 			}
 		}
 		try (Reader reader2 = new FileReader("Aircrafts.txt")) {
 			Collection<Aircraft> airReader = aircraftsReader.read(reader2);
-			this.aircraftMap = new HashMap<String, Aircraft>();
+			aircraftMap.clear();
 			for (Aircraft a : airReader) {
-				this.aircraftMap.put(a.getCode(), a);
+				aircraftMap.put(a.getCode(), a);
 			}
 		}
 		try (Reader reader3 = new FileReader("FlightSchedule.txt")) {
 			this.flightSchedules = flightScheduleReader.read(reader3, airportMap, aircraftMap);
 		}
 		
-		catch (FileNotFoundException e) {
-			throw e;
-		}
 	}
 	
 	
