@@ -40,7 +40,7 @@ public class MyController implements Controller {
 		dataManager.getFlightSchedules().stream().filter(
 				fs -> fs.getDepartureAirport().equals(departureAirport) &&
 				      fs.getArrivalAirport().equals(arrivalAirport) &&
-				      fs.getDaysOfWeek().contains(dayOfWeek)
+				      fs.getDaysOfWeek().contains(date.getDayOfWeek())
 				      ).collect(Collectors.toList());
 		*/
 		return res;
