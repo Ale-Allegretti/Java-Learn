@@ -1,0 +1,63 @@
+ARIETE
+------------
+GENNAIO
+Amore:	avrai la testa un po' altrove
+Lavoro:	impegnatevi di piu'
+Salute:	praticate calma e moderazione
+
+FEBBRAIO
+Amore:	grande intimita'
+Lavoro:	diffidate di un collega invidioso
+Salute:	meglio mangiare in modo salutare
+
+MARZO
+Amore:	servira' un po' di pazienza
+Lavoro:	non sopravvalutate chi vi e' intorno
+Salute:	non affaticate la cistifellea
+
+APRILE
+Amore:	divertimento nello stare insieme
+Lavoro:	non sopravvalutate chi vi e' intorno
+Salute:	potete permettervi anche i pasticcini
+
+MAGGIO
+Amore:	chi e' single avra' nuove occasioni
+Lavoro:	non sopravvalutate chi vi e' intorno
+Salute:	non siate irritabili
+
+GIUGNO
+Amore:	servira' un po' di pazienza
+Lavoro:	diffidate di un collega invidioso
+Salute:	non siate irritabili
+
+LUGLIO
+Amore:	divertimento nello stare insieme
+Lavoro:	cogliete le occasioni
+Salute:	potete permettervi anche i pasticcini
+
+AGOSTO
+Amore:	dedicate piu' tempo al partner
+Lavoro:	cogliete le occasioni
+Salute:	non affaticate la cistifellea
+
+SETTEMBRE
+Amore:	grande intimita'
+Lavoro:	cogliete le occasioni
+Salute:	potete permettervi anche i pasticcini
+
+OTTOBRE
+Amore:	servira' un po' di pazienza
+Lavoro:	diffidate di un collega invidioso
+Salute:	potete permettervi anche i pasticcini
+
+NOVEMBRE
+Amore:	dedicate piu' tempo al partner
+Lavoro:	non sopravvalutate chi vi e' intorno
+Salute:	potete permettervi anche i pasticcini
+
+DICEMBRE
+Amore:	chi e' single avra' nuove occasioni
+Lavoro:	non sopravvalutate chi vi e' intorno
+Salute:	perfetto equilibrio
+
+6
