@@ -3,6 +3,7 @@ package tris.ui.controller;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+
 public interface Controller {
 	
 	public static void alert(String title, String headerMessage, String contentMessage) {
