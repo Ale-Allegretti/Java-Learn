@@ -2,6 +2,7 @@ package tris.persistence;
 
 public class SadPrinterException extends Exception
 {
+
 	private static final long serialVersionUID = 1L;
 
 	public SadPrinterException()

@@ -1,20 +1,16 @@
 package bikerent.ui.javafx;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
-import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 
-import com.sun.javafx.geom.AreaOp.IntOp;
-
 import bikerent.ui.controller.Controller;
-import bikerent.ui.controller.MyController;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -28,9 +24,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 
@@ -51,6 +46,7 @@ public class RentABikePane extends BorderPane {
 
 	public RentABikePane(Controller controller) {
 		this.controller = controller;
+		formatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.ITALY);
 		//
 		leftPane = new VBox();
 		leftPane.setSpacing(1);
@@ -64,6 +60,8 @@ public class RentABikePane extends BorderPane {
 		fieldInizio = new TextField();
 		fieldInizio.setLayoutX(pickerInizio.getLayoutX());
 		fieldInizio.setLayoutY(pickerInizio.getLayoutY());
+		fieldInizio.setText(LocalTime.now().format(formatter));
+		fieldInizio.setPromptText("Inserire ora iniziale");
 		leftPane.getChildren().add(fieldInizio);
 	    leftPane.setAlignment(Pos.BASELINE_LEFT);
 		//	
@@ -83,20 +81,23 @@ public class RentABikePane extends BorderPane {
 		fieldFine = new TextField();
 		fieldFine.setLayoutX(pickerFine.getLayoutX());
 		fieldFine.setLayoutY(pickerFine.getLayoutY());
+		fieldFine.setText(LocalTime.now().format(formatter));
+		fieldFine.setPromptText("Inserire ora finale");
 		centerPane.getChildren().add(fieldFine);
 		centerPane.setAlignment(Pos.BASELINE_LEFT);
 		//
 		outputArea = new TextArea();
-		VBox testoBox = new VBox(new Label(""), outputArea);
-		testoBox.setSpacing(5);
-		testoBox.setAlignment(Pos.BOTTOM_RIGHT);
+		outputArea.setEditable(false);
+		outputArea.setPrefWidth(250);
+		outputArea.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+		outputArea.setText("");
 	
 		//bottoneTicket.setOnAction(this::calcolaCostoNoleggio);
 		
 		
 		this.setLeft(leftPane);
 		this.setCenter(centerPane);
-		this.setRight(testoBox);
+		this.setRight(outputArea);
 		
 	}
 	
@@ -105,21 +106,31 @@ public class RentABikePane extends BorderPane {
 			return;
 		if (fieldFine.getText().isBlank())
 			return;
+		String citta = this.combo.getValue();
+		if (citta == null) {
+			Controller.alert("Errore", "Impossibile reperire la tariffa", "Non è stata selezionata alcuna città");
+			this.outputArea.setText("");
+			return;
+		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.ITALY);
 		String start = fieldInizio.getText().trim();
 		String end = fieldFine.getText().trim();
 		try {
-			LocalTime partenza = LocalTime.parse(start, DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
-			LocalTime arrivo = LocalTime.parse(end, DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
-			if (pickerFine.getValue().isBefore(pickerInizio.getValue())) {
+			LocalTime partenza = LocalTime.parse(start, formatter);
+			LocalTime arrivo = LocalTime.parse(end, formatter);
+			if (pickerFine.getValue().isBefore(pickerInizio.getValue()) || arrivo.isBefore(partenza)) {
 				Controller.alert("Errore", "Impossibile tornare indietro nel tempo", 
 						"L'orario di fine precede quelle di inizio noleggio");
+				this.outputArea.setText("");
 				return;
 			}
-			double costo = this.controller.getRentCost(combo.getValue(), pickerInizio.getValue(), partenza, pickerFine.getValue(), arrivo);
-			outputArea.setText("Costo del noleggio " + costo);
-		} catch (Exception e) {
+			double costo = this.controller.getRentCost(citta, pickerInizio.getValue(), partenza, pickerFine.getValue(), arrivo);
+			NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.ITALY);
+			this.outputArea.setText("Costo del noleggio " + currencyFormatter.format(costo));
+		} catch (DateTimeParseException e) {
 			Controller.alert("Errore di formato", "Errore nel formato orario", 
 					"L'orario di inizio e fine noleggio deve essere nella forma HH:MM");
+			this.outputArea.setText("");
 		}
 		
 	}
