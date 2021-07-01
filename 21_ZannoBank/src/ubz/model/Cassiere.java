@@ -8,46 +8,46 @@ import ubz.persistence.DotazioneLoader;
 
 public class Cassiere {
 
-	private Disponibilita disponibilita;
+	private Disponibilit‡ disponibilit‡;
 
 	public Cassiere(DotazioneLoader loader) {
 		if (loader == null)
 			throw new IllegalArgumentException("loader nullo");
-		this.disponibilita = loader.getDisponibilita();
+		this.disponibilit‡ = loader.getDisponibilit‡();
 	}
 
-	public int getDisponibilitaTaglio(Taglio t){
-		return disponibilita.getQuantita(t);
+	public int getDisponibilit‡Taglio(Taglio t){
+		return disponibilit‡.getQuantit‡(t);
 	} 
 	
-	public Prelievo preleva(int importo) throws ImpossibleWithdrawException{
+	public Prelievo preleva(int importo) throws ImpossibleWithdrawException {
 		SortedMap<Taglio, Integer> mappaPrelievo = new TreeMap<>();
 		int importoResiduo = importo;
 		for(Taglio t: Taglio.values()){
-			 int quantitaTaglioCorrente = calcolaQuantitaDiQuestoTaglio(t, importoResiduo);
-			 importoResiduo -= quantitaTaglioCorrente * t.getValore();
-			 mappaPrelievo.put(t, quantitaTaglioCorrente);
+			 int quantit‡TaglioCorrente = calcolaQuantit‡DiQuestoTaglio(t, importoResiduo);
+			 importoResiduo -= quantit‡TaglioCorrente * t.getValore();
+			 mappaPrelievo.put(t, quantit‡TaglioCorrente);
 		}
 		if (importoResiduo>0) 
 			throw new ImpossibleWithdrawException(importo, importoResiduo);
 		else {
-			aggiornaDisponibilitaInCassa(mappaPrelievo);
+			aggiornaDisponibilit‡InCassa(mappaPrelievo);
 			return new Prelievo(mappaPrelievo);
 		}
 	}
 
-	protected void aggiornaDisponibilitaInCassa(Map<Taglio, Integer> mappaPrelievo) {
+	protected void aggiornaDisponibilit‡InCassa(Map<Taglio, Integer> mappaPrelievo) {
 		for(Taglio t: Taglio.values()){
-			int disponibilitaAttuale = getDisponibilitaTaglio(t);
+			int disponibilit‡Attuale = getDisponibilit‡Taglio(t);
 			int banconoteDaPrelevare = mappaPrelievo.get(t);
-			disponibilita.aggiorna(t, disponibilitaAttuale-banconoteDaPrelevare);
+			disponibilit‡.aggiorna(t, disponibilit‡Attuale-banconoteDaPrelevare);
 		}	
 	}
 
 	/* versione base SENZA POLITICHE */
-	protected int calcolaQuantitaDiQuestoTaglio(Taglio t, int importo){
-		 int quantitaRichiesta = importo/t.getValore();
-		 int quantitaDisponibile = disponibilita.getQuantita(t);
-		 return Math.min(quantitaRichiesta, quantitaDisponibile);
+	protected int calcolaQuantit‡DiQuestoTaglio(Taglio t, int importo){
+		 int quantit‡Richiesta = importo/t.getValore();
+		 int quantit‡Disponibile = disponibilit‡.getQuantit‡(t);
+		 return Math.min(quantit‡Richiesta, quantit‡Disponibile);
 	}
 }

@@ -19,11 +19,11 @@ public class Soldi implements Serializable {
 		this.importo = calcola();
 	}
 	
-	public int getQuantita(Taglio t){
+	public int getQuantità(Taglio t){
 		return mappa.get(t);
 	}
 	
-	protected Integer setQuantita(Taglio t, int value){
+	protected Integer setQuantità(Taglio t, int value){
 		return mappa.put(t, value);
 	}
 		

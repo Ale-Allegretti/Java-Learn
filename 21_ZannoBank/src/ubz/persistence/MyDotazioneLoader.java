@@ -1,32 +1,32 @@
 package ubz.persistence;
 
+
+
 import java.io.EOFException;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
-import ubz.model.Disponibilita;
+import ubz.model.Disponibilità;
 import ubz.model.Politiche;
 
-public class MyDotazioneLoader implements DotazioneLoader {
 
-	private Disponibilita disponibilita;
-	private Politiche politiche;
+public class MyDotazioneLoader implements DotazioneLoader {
 	
-	public void load(InputStream is) throws IOException, BadFileFormatException {
-		if (is == null)
-			throw new IllegalArgumentException("inputstream nullo");
-		
-		try (ObjectInputStream ois = new ObjectInputStream(is)){
-						
-			Object obj = ois.readObject();	
-			if (obj instanceof Disponibilita) 
-				disponibilita = (Disponibilita) obj;
+	private Disponibilità disponibilità;
+	private Politiche politiche;
+
+	@Override
+	public void load(InputStream r) throws IOException, BadFileFormatException {
+		if (r == null)
+			throw new IllegalArgumentException("File corrotto");
+		try (ObjectInputStream stream = new ObjectInputStream(r)) {
+			Object obj = stream.readObject();	
+			if (obj instanceof Disponibilità) 
+				disponibilità = (Disponibilità) obj;
 			else 
-				throw new BadFileFormatException("Disponibilitï¿½ non presente nel file binario");
-			
-			obj = ois.readObject();
+				throw new BadFileFormatException("Disponibilità non presente nel file binario");
+			obj = stream.readObject();
 			if (obj instanceof Politiche) 
 				politiche = (Politiche) obj;
 			else 
@@ -41,25 +41,17 @@ public class MyDotazioneLoader implements DotazioneLoader {
 		} catch (Exception e4) {
 			throw new BadFileFormatException("Errore nella lettura del file", e4);
 		}
+		
 	}
 
 	@Override
-	public Disponibilita getDisponibilita() {
-		return disponibilita;
+	public Disponibilità getDisponibilità() {
+		return disponibilità;
 	}
 
 	@Override
 	public Politiche getPolitiche() {
 		return politiche;
-	}
-
-
-	// quick test
-	public static void main(String args[]) throws IOException, BadFileFormatException {
-		DotazioneLoader loader = new MyDotazioneLoader();
-		loader.load(new FileInputStream("DotazioneIniziale.dat"));
-		System.out.println(loader.getDisponibilita());
-		System.out.println(loader.getPolitiche());
 	}
 
 }

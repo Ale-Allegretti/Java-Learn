@@ -7,8 +7,8 @@ public class Prelievo extends Soldi {
 
 	private static final long serialVersionUID = 1L;
 
-	public Prelievo(Map<Taglio,Integer> mappaQuantita) {
-		super(mappaQuantita);
+	public Prelievo(Map<Taglio,Integer> mappaQuantità) {
+		super(mappaQuantità);
 	}
 
 }

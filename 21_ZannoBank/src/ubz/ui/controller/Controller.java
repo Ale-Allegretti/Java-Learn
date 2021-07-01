@@ -21,8 +21,8 @@ public class Controller {
 		dialogManager.alert(title, header, content);
 	}
 
-	public int getDisponibilitaAttuale(Taglio t) {
-		return cassiere.getDisponibilitaTaglio(t);
+	public int getDisponibilit‡Attuale(Taglio t) {
+		return cassiere.getDisponibilit‡Taglio(t);
 	}
 
 	public Prelievo preleva(int importo) throws ImpossibleWithdrawException {
