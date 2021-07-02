@@ -16,7 +16,6 @@ public class TypeFilter implements Filter {
 	}
 
 	
-	@SuppressWarnings("preview")
 	@Override
 	public boolean filter(Media media) {
 		if (media instanceof HasType t)
