@@ -1,88 +1,74 @@
 package qa.model;
 
-import static org.junit.Assert.assertArrayEquals;
-
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class WeightChecker extends Checker{
+import qa.persistence.BadFileFormatException;
+import qa.persistence.MisureReader;
+import qa.persistence.MyMisureReader;
+
+public class WeightChecker extends Checker {
+
+	private static NumberFormat percentFormatter = NumberFormat.getPercentInstance();
 
 	public WeightChecker(List<Misura> elencoMisure) {
 		super(elencoMisure);
+		percentFormatter.setMaximumFractionDigits(2);
 	}
 
-	@Override
+	private boolean verifica(Misura m){
+		// ritorna -1 se tutto ok, 0 se borderline, +1 se critica
+		// per "critica" si intende fuori range per difetto, ossia prodotto mancante (truffa)
+		// al contrario, prodotto in eccesso è sempre ok
+		for(Tolleranza t: Tolleranza.values())
+			if (t.getPeso()>m.getExpected()){
+				//System.out.println("checking " + m.getExpected() + " vs. " + m.getReal() + ", range is " + t);
+				//System.out.println("g: " + (m.getReal()-m.getExpected()) + ", " +  t.getValue());
+				switch (t.getUnit()) {
+					case '%': return verificaScostamentoPercentuale(m.getExpected(),m.getReal(),t.getValue());  // implicit break
+					case 'g': return verificaScostamentoAssoluto(m.getExpected(),m.getReal(),t.getValue()); 					// implicit break
+					default: throw new IllegalArgumentException("unexpected unit type");
+				}
+			} 
+		return verificaScostamentoPercentuale(m.getExpected(), m.getReal(), Tolleranza.OLTRE1000.getValue());
+	}
+
+	public List<Misura> getListaMisureInRange(String descrizione){
+			return getMisure(descrizione).stream().filter(m->verifica(m)).collect(Collectors.toList());
+	}
+	
+	public double getPercentualeMisureInRange(String descrizione){
+		return 100.0*getListaMisureInRange(descrizione).size()/getMisure(descrizione).size()/100;
+	}
+	
 	public Map<String, Double> getTabellaPercentuali() {
-		Map<String, Double> res = new HashMap<>();
- 		for (int i = 0; i < getNumeroMisure(); i++) {
-			Misura misura = this.getElencoMisure().get(i);
-			String nome = misura.getName();
-			double perc = (100/misura.getReal())*(misura.getReal()-misura.getExpected());
-			if (this.verificaScostamentoPercentuale(misura.getReal(), misura.getExpected(), perc))
-				res.put(nome, perc);
-		}
-		return res;
+		return getTabellaMisure().keySet().stream().collect(
+				Collectors.toMap(desc->desc, desc->getPercentualeMisureInRange(desc)));
 	}
 
-	@Override
 	public String printTabellaPercentuali() {
-		NumberFormat format = NumberFormat.getInstance(Locale.ITALY);
-		format.setMaximumFractionDigits(2);
-		format.setMinimumFractionDigits(2);
-		StringBuilder builder = new StringBuilder();
-		
-		builder.append("Tabella percentuali: \n");
-		for (int i = 0; i < this.getTabellaPercentuali().size(); i++) {
-			String[] nomi = this.getTabellaPercentuali().keySet().toArray(new String[this.getTabellaPercentuali().size()]);
-			builder.append(nomi[i]);
-			builder.append("\t");
-			builder.append(format.format(this.getTabellaPercentuali().get(nomi[i])) + " %");
-			builder.append(System.lineSeparator());
-		}
-		
-		return builder.toString();
+		return getTabellaPercentuali().keySet().stream().collect(
+				Collectors.toMap(desc->desc, desc->percentFormatter.format(getPercentualeMisureInRange(desc)))).toString();
 	}
 
-	/* FINOA50(  50, 9.0, '%'), FINOA100(100, 4.5, 'g'), 
-	FINOA200(200, 4.5, '%'), FINOA300(300, 9.0, 'g'), 
-	FINOA500(500, 3.0, '%'), FINOA1000(1000, 15, 'g'), 
-	OLTRE1000(1000, 1.5, '%'); */
-	
-	@Override
-	public List<Misura> getListaMisureInRange(String descrizione) {
-		List<Misura> res = new ArrayList<>();
-		List<Misura> all = this.getMisure(descrizione);
-		for (int i = 0; i < all.size(); i++) {
-			Misura misura = all.get(i);
-			double delta = (100/misura.getReal())*(misura.getReal()-misura.getExpected());
-			if (misura.getExpected() - misura.getReal() > 0)
-				res.add(misura);
-			else {
-				if (misura.getExpected() <= 50.0)
-					
-					
-				
-				
-				
-				
-				
-				
+	// quick test
+	public static void main(String args[]) throws IOException, BadFileFormatException {
+		try (Reader r = new FileReader("Misure.txt")) {
+			MisureReader vReader = new MyMisureReader();
+			List<Misura> listaMisure = vReader.leggiMisure(r);
+			WeightChecker checker = new WeightChecker(listaMisure);
+			System.out.println("Misure lette: " + checker.getNumeroMisure());
+			for (String descrizione : checker.getTabellaMisure().keySet()) {
+				System.out.println(descrizione + "(" + checker.getMisure(descrizione).size() + ")");
+				System.out.println("# prodotti entro il range: " + checker.getListaMisureInRange(descrizione).size());
+				System.out.println("% prodotti entro il range: " + percentFormatter.format(checker.getPercentualeMisureInRange(descrizione)));
 			}
+			System.out.println(checker.printTabellaPercentuali());
 		}
-
-		return null;
 	}
-	
-	
-
-	@Override
-	public double getPercentualeMisureInRange(String descrizione) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }
