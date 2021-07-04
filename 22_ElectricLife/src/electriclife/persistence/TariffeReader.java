@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import electriclife.model.Tariffa;
 
-public interface TariffeReader
-{
-	Collection<Tariffa> caricaTariffe() throws IOException, BadFileFormatException;	
+public interface TariffeReader {
+	Collection<Tariffa> caricaTariffe() throws IOException, BadFileFormatException;
 }

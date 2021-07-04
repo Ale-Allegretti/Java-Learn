@@ -12,7 +12,7 @@ public class ElectricLifeApplicationMock extends ElectricLifeApplication {
 
 	@Override
 	protected Controller createController() {
-		TariffeReader tariffeReader = new TariffaReaderMock();	
+		TariffeReader tariffeReader = new TariffaReaderMock();
 		Controller c = new MyController();
 		try {
 			c.leggiTariffe(tariffeReader);

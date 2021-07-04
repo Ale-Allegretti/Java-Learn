@@ -12,12 +12,14 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public interface Controller
-{
+public interface Controller {
 	void leggiTariffe(TariffeReader tariffaReader) throws IOException, BadFileFormatException;
+
 	ObservableList<Tariffa> getTariffe();
+
 	Bolletta creaBolletta(LocalDate date, String nomeTariffa, int consumo);
-	void stampaBolletta(Bolletta b, BollettaWriter bollettaWriter); 
+
+	void stampaBolletta(Bolletta b, BollettaWriter bollettaWriter);
 
 	public static void alert(String title, String headerMessage, String contentMessage) {
 		Alert alert = new Alert(AlertType.ERROR);

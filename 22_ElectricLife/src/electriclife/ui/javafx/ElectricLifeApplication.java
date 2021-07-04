@@ -24,7 +24,7 @@ public class ElectricLifeApplication extends Application {
 			return;
 		stage.setTitle("Electric Life");
 		ElectricLifePane root = new ElectricLifePane(controller);
-		
+
 		Scene scene = new Scene(root, 750, 500, Color.ALICEBLUE);
 		stage.setScene(scene);
 		stage.show();
@@ -37,14 +37,13 @@ public class ElectricLifeApplication extends Application {
 			c.leggiTariffe(tariffeReader);
 			return c;
 		} catch (FileNotFoundException e) {
-			Controller.alert("Errore di I/O", "Impossibile aprire uno dei due file", "Errore nella creazione del reader o del writer");
+			Controller.alert("Errore di I/O", "Impossibile aprire uno dei due file",
+					"Errore nella creazione del reader o del writer");
 			return null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			Controller.alert("Errore di I/O", "Impossibile leggere il file delle tariffe", "Errore durante la lettura");
 			return null;
-		}
-		catch (BadFileFormatException e) {
+		} catch (BadFileFormatException e) {
 			Controller.alert("Errore nel formato del file", "File tariffe errato", "File tariffe non caricato");
 			return null;
 		}

@@ -32,8 +32,8 @@ public class ElectricLifePane extends BorderPane {
 	private VBox leftPane;
 	private Bolletta bolletta;
 	private ComboBox<Tariffa> comboTariffe;
-	private DatePicker picker; 
-	
+	private DatePicker picker;
+
 	public ElectricLifePane(Controller controller) {
 		this.controller = controller;
 		//
@@ -63,7 +63,7 @@ public class ElectricLifePane extends BorderPane {
 		outputArea.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
 		outputArea.setText("");
 		this.setRight(outputArea);
-		
+
 		buttonCalcola = new Button("Calcola");
 		buttonCalcola.setOnAction(this::calcolaBolletta);
 		TilePane commandPane = new TilePane();
@@ -79,14 +79,12 @@ public class ElectricLifePane extends BorderPane {
 		String consumoText = this.campoConsumo.getText();
 		try {
 			int consumo = Integer.parseInt(consumoText);
-			bolletta = controller.creaBolletta(	picker.getValue(), 
-											this.comboTariffe.getValue().getNome(), 
-											consumo);
+			bolletta = controller.creaBolletta(picker.getValue(), this.comboTariffe.getValue().getNome(), consumo);
 			outputArea.setText(bolletta.toString());
 			buttonStampa.setDisable(false);
-		}
-		catch(NumberFormatException e) {
-			Controller.alert("Errore formato numerico", "Consumo errato", "Il consumo in KWh dev essere un numero intero");
+		} catch (NumberFormatException e) {
+			Controller.alert("Errore formato numerico", "Consumo errato",
+					"Il consumo in KWh dev essere un numero intero");
 			// bolletta immodificata
 		}
 	}

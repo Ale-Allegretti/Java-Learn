@@ -10,15 +10,13 @@ import org.junit.Test;
 
 import electriclife.model.*;
 
-public class BollettaTests
-{
+public class BollettaTests {
 //	static {
 //		System.setProperty("java.locale.providers", "JRE");
 //	}
-	
+
 	@Test
-	public void testBolletta()
-	{
+	public void testBolletta() {
 		TariffaAConsumo t = new TariffaAConsumo("MyTariffa", 0.16);
 		Bolletta b = new Bolletta(LocalDate.of(2018, 5, 31), t, 123);
 		assertEquals("MyTariffa", b.getNomeTariffa());
@@ -29,8 +27,7 @@ public class BollettaTests
 	}
 
 	@Test
-	public void testAddLineaBollettaLineaBolletta()
-	{
+	public void testAddLineaBollettaLineaBolletta() {
 		TariffaAConsumo t = new TariffaAConsumo("MyTariffa", 0.16);
 		Bolletta b = new Bolletta(LocalDate.of(2018, 5, 31), t, 123);
 		assertEquals(0, b.getLineeBolletta().size());
@@ -41,30 +38,29 @@ public class BollettaTests
 	}
 
 	@Test
-	public void testStampa()
-	{
+	public void testStampa() {
 		TariffaAConsumo t = new TariffaAConsumo("MyTariffa", 0.16);
 		Bolletta b = new Bolletta(LocalDate.of(2018, 5, 31), t, 123);
 		b.addLineaBolletta(new VoceBolletta("Ciao1", 100));
 		b.addLineaBolletta(new VoceBolletta("Ciao2", 200));
 		b.addLineaBolletta(new VoceBolletta("Ciao3", 300));
 		b.addLineaBolletta(new VoceBolletta("Ciao4", 400));
-		
+
 		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);		
-		b.stampa(pw);		
+		PrintWriter pw = new PrintWriter(sw);
+		b.stampa(pw);
 		pw.close();
-		
+
 		String res = sw.toString();
-		
+
 		assertTrue(res.contains("MyTariffa"));
 		assertTrue(res.contains("maggio"));
 		assertTrue(res.contains("2018"));
 		assertTrue(res.contains("123"));
-		
+
 		assertTrue(res.contains("Ciao1"));
 		assertTrue(res.contains("100"));
-		
+
 		assertTrue(res.contains("Ciao2"));
 		assertTrue(res.contains("200"));
 

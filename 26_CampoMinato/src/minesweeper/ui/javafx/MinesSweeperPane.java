@@ -23,7 +23,7 @@ public class MinesSweeperPane extends BorderPane {
 		this.controller = controller;
 		
 		//
-		HBox topBox = new HBox();
+		HBox topBox = new HBox(); 
 		int numMines = controller.getMinesNumber();
 		topBox.getChildren().add(new Label("Mines: " + numMines));
 		topBox.setAlignment(Pos.TOP_LEFT);
