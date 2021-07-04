@@ -93,7 +93,7 @@ public class CalendarPane extends BorderPane {
 		for (int i = 0; i < app.size(); i++)
 			l.add(app.get(i));
 		ObservableList<Appointment> appointment = FXCollections.observableArrayList(l);
-		appList.setItems(appointment);
+		appList.setItems(appointment);	
 	}
 
 	private void myAddHandle(ActionEvent event) {
