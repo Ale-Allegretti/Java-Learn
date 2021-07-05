@@ -8,37 +8,24 @@ import java.util.StringTokenizer;
 
 public class Prova {
 	public static void main(String args[]) throws ParseException {
-		NumberFormat euroFormatter = NumberFormat.getCurrencyInstance(Locale.FRENCH);
+		NumberFormat euroFormatter = NumberFormat.getNumberInstance(Locale.ITALY);
 
-		String stringa = "30,00 \u20AC;";
-		
+		String stringa = "0--15.123: 5%\n";
 
-		StringTokenizer st = new StringTokenizer(stringa, ";");
-		String priceString = st.nextToken().trim();
+		StringTokenizer tokenizer = new StringTokenizer(stringa, "-:\t");
+		String min = tokenizer.nextToken().trim();
+		String max = tokenizer.nextToken().trim(); 
+		String perc = tokenizer.nextToken().trim();
 
-		ParsePosition position = new ParsePosition(0);
+		System.out.println(min);
+		System.out.println(max);
+		System.out.println(perc);
 
-		System.out.println(priceString);
-
-		System.out.println(euroFormatter.parse(priceString, position));
-
-		// Stream.of(items).forEach(s -> System.out.print(s));
-		System.out.print("\n");
+		System.out.println(euroFormatter.parse(perc));
 
 		
-		//String[] items = stringa.split("[-]+");
-		/*
-		NumberFormat n = NumberFormat.getCurrencyInstance(Locale.ITALY);
-		// points
-		double points = 1.78;
-
-		String formatoString = n.format(points).toString() + ";";
-		System.out.println(formatoString);
-		StringTokenizer st2 = new StringTokenizer(formatoString, "€;");
-
-		String es2 = st2.nextToken().strip().replace("€", "");
-		System.out.println(es2);
-		System.out.println(euroFormatter.parse(es2, position).doubleValue()); */
+		
+		
 
 	}
 
