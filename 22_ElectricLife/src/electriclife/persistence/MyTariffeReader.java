@@ -3,10 +3,11 @@ package electriclife.persistence;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
@@ -64,14 +65,13 @@ public class MyTariffeReader implements TariffeReader {
 		else
 			aConsumoGiàTrovata = true;
 		// A CONSUMO ; € 0,14
-		NumberFormat euroFormatter = NumberFormat.getNumberInstance(Locale.ITALY);
+		//NumberFormat euroFormatter = NumberFormat.getNumberInstance(Locale.ITALY);
 		@SuppressWarnings("unused")
 		String toThrowAway = tokenizer.nextToken("€").trim(); // "; €"
-		String numPrezzo = tokenizer.nextToken("\r\n").replace("€", "").trim();
-		double prezzo;
-
+		DecimalFormat currencyF = new DecimalFormat("¤ #,##0.##");
+		String numPrezzo = tokenizer.nextToken("\r\n").trim();
 		ParsePosition position = new ParsePosition(0);
-		prezzo = euroFormatter.parse(numPrezzo, position).doubleValue();
+		double prezzo = currencyF.parse(numPrezzo, position).doubleValue();
 		System.out.println(prezzo);
 		if (position.getIndex() != numPrezzo.length()) {
 			throw new BadFileFormatException("prezzo " + numPrezzo + " @ " + position.getIndex());
@@ -81,9 +81,11 @@ public class MyTariffeReader implements TariffeReader {
 
 	private Tariffa readFlat(StringTokenizer tokenizer) throws BadFileFormatException {
 		// FLAT; CASA MAXI; SOGLIA 450; € 50,00; KWh EXTRA € 0,21
-		NumberFormat euroFormatter = NumberFormat.getNumberInstance(Locale.ITALY);
+		//NumberFormat euroFormatter = NumberFormat.getNumberInstance(Locale.ITALY);
+		
+		DecimalFormat currencyF = new DecimalFormat("¤ #,##0.##");
+		currencyF.setCurrency(Currency.getInstance(Locale.ITALY));
 		String nome = tokenizer.nextToken().trim();
-
 		String wordSoglia = tokenizer.nextToken(" \t;").trim();
 		if (!wordSoglia.equalsIgnoreCase("SOGLIA"))
 			throw new BadFileFormatException("Expected SOGLIA");
@@ -92,12 +94,10 @@ public class MyTariffeReader implements TariffeReader {
 
 		@SuppressWarnings("unused")
 		String toThrowAway = tokenizer.nextToken("€").trim(); // "; �"
-		String numPrezzo = tokenizer.nextToken(";").replace("€", "").trim();
-		double prezzo;
-		System.out.println(numPrezzo);
-		ParsePosition position = new ParsePosition(0);
 		
-		prezzo = euroFormatter.parse(numPrezzo, position).doubleValue();
+		String numPrezzo = tokenizer.nextToken(";").trim();
+		ParsePosition position = new ParsePosition(0);
+		double prezzo = currencyF.parse(numPrezzo, position).doubleValue();
 		if (position.getIndex() != numPrezzo.length()) {
 			throw new BadFileFormatException("prezzo " + numPrezzo + " @ " + position.getIndex());
 		}
@@ -107,11 +107,10 @@ public class MyTariffeReader implements TariffeReader {
 		if (!wordKWhExtra.equalsIgnoreCase("KWh EXTRA"))
 			throw new BadFileFormatException("Expected KWh EXTRA");
 
-		String numExtra = tokenizer.nextToken("\n\r").replace("€", "").trim();
+		String numExtra = tokenizer.nextToken("\n\r").trim();
 
-		double extra;
 		position = new ParsePosition(0);
-		extra = euroFormatter.parse(numExtra, position).doubleValue();
+		double extra = currencyF.parse(numExtra, position).doubleValue();
 		if (position.getIndex() != numExtra.length()) {
 			throw new BadFileFormatException("prezzo " + numExtra + " @ " + position.getIndex());
 		}
