@@ -18,8 +18,8 @@ public class TypeFilter implements Filter {
 	
 	@Override
 	public boolean filter(Media media) {
-		if (media instanceof HasType t)
-			return  t.getType().equals(this.typeToFind);
+//		if (media instanceof HasType t)
+//			return  t.getType().equals(this.typeToFind);
 		return false;
 	}
 	
