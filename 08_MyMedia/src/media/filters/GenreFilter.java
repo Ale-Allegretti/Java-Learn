@@ -14,7 +14,6 @@ public class GenreFilter implements Filter {
 		this.genre = genre;
 	}
 
-	@SuppressWarnings("preview")
 	@Override
 	public boolean filter(Media media) {
 		if (media instanceof HasGenre d)

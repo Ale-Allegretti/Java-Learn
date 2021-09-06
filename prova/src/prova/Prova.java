@@ -2,7 +2,6 @@ package prova;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.util.Locale;
 import java.util.StringTokenizer;
 

@@ -15,7 +15,6 @@ public class DurationFilter implements Filter {
 	}
 	
 	
-	@SuppressWarnings("preview")
 	@Override
 	public boolean filter(Media media) {
 		if (media instanceof HasDuration m)

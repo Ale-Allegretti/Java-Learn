@@ -69,7 +69,6 @@ public class Ebook extends Media implements HasGenre {
 		return result;
 	}
 
-	@SuppressWarnings("preview")
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Ebook eb)

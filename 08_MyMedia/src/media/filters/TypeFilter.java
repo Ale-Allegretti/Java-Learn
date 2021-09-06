@@ -5,6 +5,7 @@ import media.Type;
 
 public class TypeFilter implements Filter {
 	
+	@SuppressWarnings("unused")
 	private Type typeToFind;
 	
 	public TypeFilter (Type typeToFind) {

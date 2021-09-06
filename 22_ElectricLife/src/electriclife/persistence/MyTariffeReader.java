@@ -19,11 +19,11 @@ import electriclife.model.TariffaFlat;
 
 public class MyTariffeReader implements TariffeReader {
 	private Reader innerReader;
-	private boolean aConsumoGiàTrovata;
+	private boolean aConsumoGiaTrovata;
 
 	public MyTariffeReader(Reader reader) {
 		this.innerReader = reader;
-		aConsumoGiàTrovata = false;
+		aConsumoGiaTrovata = false;
 	}
 
 	@Override
@@ -60,10 +60,10 @@ public class MyTariffeReader implements TariffeReader {
 	}
 
 	private Tariffa readConsumo(StringTokenizer tokenizer) throws BadFileFormatException {
-		if (aConsumoGiàTrovata)
+		if (aConsumoGiaTrovata)
 			throw new BadFileFormatException("Tariffa a consumo duplicata");
 		else
-			aConsumoGiàTrovata = true;
+			aConsumoGiaTrovata = true;
 		// A CONSUMO ; € 0,14
 		//NumberFormat euroFormatter = NumberFormat.getNumberInstance(Locale.ITALY);
 		@SuppressWarnings("unused")

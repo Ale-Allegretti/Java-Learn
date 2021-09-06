@@ -37,7 +37,6 @@ public abstract class Media implements HasType {
 	}
 	
 
-	@SuppressWarnings("preview")
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Media m)

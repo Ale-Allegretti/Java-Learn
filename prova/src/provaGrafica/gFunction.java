@@ -46,6 +46,7 @@ public class gFunction extends Application {
 		g.fillText("" + yAxisMin, larghezza / 2 + 5, altezza - 5);
 		g.setStroke(Color.BLUE);
 		float fXAxisMin = f.apply(Float.valueOf(xAxisMin));
+		@SuppressWarnings("unused")
 		float xPrev = xAxisMin, yPrev = fXAxisMin;
 		setPixel(g, xAxisMin, fXAxisMin);
 		for (int ix = 1; ix < g.getCanvas().getWidth(); ix++) {

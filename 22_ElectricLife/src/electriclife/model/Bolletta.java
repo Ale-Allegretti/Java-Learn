@@ -74,5 +74,6 @@ public class Bolletta {
 		}
 		pw.print(doppialinea);
 	}
+}	
 
-}
+

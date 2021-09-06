@@ -55,7 +55,6 @@ public class Song extends Media implements HasDuration, HasGenre {
 	}
 
 	
-	@SuppressWarnings("preview")
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Song c) {	
