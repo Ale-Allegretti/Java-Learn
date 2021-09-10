@@ -1,4 +1,4 @@
-package prova;
+package proveVarie;
 
 import java.util.HashMap;
 import java.util.Iterator;

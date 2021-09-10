@@ -1,4 +1,4 @@
-package prova;
+package proveVarie;
 
 import java.text.NumberFormat;
 import java.text.ParseException;

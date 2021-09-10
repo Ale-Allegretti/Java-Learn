@@ -1,4 +1,4 @@
-package provaAlberi;
+package proveVarie;
 
 import java.util.List;
 import java.util.function.Function;
