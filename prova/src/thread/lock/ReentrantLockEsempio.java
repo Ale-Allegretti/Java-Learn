@@ -33,7 +33,7 @@ public class ReentrantLockEsempio {
 				istanzaLock.unlock();
 			}
 		} else {
-			System.out.println("************************ Il thread che ha il lock sull'oggetto �: " + Thread.currentThread().getName());
+			System.out.println("************************ Il thread che ha il lock sull'oggetto è: " + Thread.currentThread().getName());
 		}
 	}
 }
