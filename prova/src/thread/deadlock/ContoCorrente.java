@@ -1,12 +1,10 @@
 package thread.deadlock;
 
 /**
- * Si ha il deadlock perch�:
+ * Si ha il deadlock perché:
  *  - il thread t1 aspetta che il thread t2 rilasci il lock sul conto2
  *  - il thread t2 aspetta che il thread t1 rilasci il lock sul conto1
- *  
- * @author Paolo
- *
+ * 
  */
 public class ContoCorrente {
 	private double saldo;
